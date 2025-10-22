@@ -23,7 +23,16 @@ class navProblemSolvingAgent(SimpleProblemSolvingAgentProgram):
 
 
   def update_state(self, state, percept):
-    return percept
+    x, y = state
+    if percept == 'right': 
+      y += 1
+    elif percept == 'left':
+      y -= 1
+    elif percept == 'down':
+      x += 1
+    elif percept == 'up':
+      x -= 1
+    return (x, y)
 
   def formulate_goal(self, state):
     if self.goal is not None:
