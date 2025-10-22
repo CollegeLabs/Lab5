@@ -25,9 +25,26 @@ def makeMaze(n):
   size = (n,n)
   proba_0 =0.2 # resulting array will have 20% of zeros
   proba_food =0.1 # resulting array will have 10% of food pellets
-  arrMaze=np.random.choice([0, 1,2], size=size, p=[proba_0, 1-proba_0-proba_food,proba_food])
+  arrMaze=np.random.choice([0, 1, 2], size=size, p=[proba_0, 1-proba_0-proba_food,proba_food])
   return arrMaze
 
+def MazeCheck(mainMaze, initState, goalState):
+  if (initState != 1):
+    mainMaze[initState] = 1
+  if (goalState != 1):
+    mainMaze[goalState] = 1
+
+def GhostCheck(mainMaze,Pinky,Inky,Blinky,Clyde,Betrayus):
+  if (Pinky != 1):
+    mainMaze[Pinky] = 1
+  if (Inky != 1):
+    mainMaze[Inky] = 1
+  if (Blinky != 1):
+    mainMaze[Blinky] = 1
+  if (Clyde != 1):
+    mainMaze[Clyde] = 1
+  if (Betrayus != 1):
+    mainMaze[Betrayus] = 1
 
 def draw_maze(maze):
     fig, ax = plt.subplots()

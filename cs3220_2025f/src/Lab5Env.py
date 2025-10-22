@@ -1,11 +1,11 @@
 from src.mazeData import *
 from src.maze2025GraphClass import mazeGraph
 from pyvis.network import Network
-from src.PS_agentPrograms import BestFirstSearchAgentProgram
+from src.PS_agentPrograms import *
 from src.mazeProblemClass import MazeProblem
-from src.agents import ProblemSolvingMazeAgentBFS
+from src.agents import *
 from src.naigationEnvironmentClass import MazeNavigationEnvironment
-from src.Lab4Agents import EnemyShip
+from src.Lab5Agents import Ghost
 from src.environmentClass import Environment
 from src.maze2025GraphClass import *
 
@@ -22,7 +22,7 @@ def MazeCheck(mainMaze, initState, goalState):
   if (goalState != 1):
     mainMaze[goalState] = 1
 
-class Lab4NavEnvironment(Environment):
+class Lab5NavEnvironment(Environment):
   def __init__(self, navGraph, maze):
     super().__init__()
     self.status = navGraph
@@ -42,7 +42,7 @@ class Lab4NavEnvironment(Environment):
               agent.performance -= 1
             else: #the spaceship is under attack (0's are walls, so they're ignored before this)
               print(f"Agent in {agent.state} is under attack!")
-              enemy = EnemyShip(self.status) 
+              enemy = Ghost(self.status) 
               if (agent.performance*2 < enemy.power):
                 agent.performance = 0 #dies instantly
               else:
