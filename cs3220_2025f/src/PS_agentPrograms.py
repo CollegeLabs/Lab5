@@ -17,7 +17,7 @@ def A_StarSearchAgentProgram(f=None):
     #f=math.dist
     
     def program(problem):
-      print("Hi")
+      #print("Hi")
 
       node = Node(problem.initial)
  
@@ -25,7 +25,7 @@ def A_StarSearchAgentProgram(f=None):
       h=node.path_cost+round(math.dist(node.state, problem.goal),3)
       frontier.put((h,node))
       reached = {problem.initial:node}
-
+      #node_length=0
       while frontier:
         print(frontier.queue)
         node = frontier.get()[1]
@@ -43,9 +43,9 @@ def A_StarSearchAgentProgram(f=None):
                 h=child.path_cost+round(f(child.state, problem.goal),3)
                 frontier.put((h,child))
                 reached.update({child.state:child})
-            
+                #node_length=len(node.expand(problem))
+      #print(f"The length of expanded nodes is {node_length}") #this print statement fails for some reason
       return None
-
     return program
 
 
@@ -87,11 +87,25 @@ def BestFirstSearchAgentProgram(f=None):
 
     return program
   
- 
-# def IDSearchAgentProgram(f=None):
-#   def program(problem):
-#     #your code here
-    
+    '''
+def IDAStartAgentProgram(f=None):
+  def program(problem):
+    root = Node(initState[problem]) #what does this even mean???
+    f_limit = f_cost(root)
+    while(1): #is this what I do here??????
+      solution, f_limit = DFS_Contour(root, f_limit)
+      if (solution != None): return solution
+      elif (f_limit == infinity): return None #using None as a null replacement
+
+  def DFS_Contour(node, f_limit):
+    if (f_cost[node] > f_limit): return None, f_cost[node] #this feels like an illegal return statement
+    if (goal_test[problem](state[node])): return node, f_limit #yes, there is no == or anything in the given diagram
+    for node, s in successors[node]:
+       solution, new_f = DFS_Contour(s, f_limit)
+       if (solution != None): return solution, f_limit
+       next_f = min(new_f, next_f)
+       return None, next_f
+    '''
  
       
 

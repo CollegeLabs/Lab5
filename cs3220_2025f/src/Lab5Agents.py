@@ -7,7 +7,7 @@ class UniformCostAgent():
     def __init__(self):
         self.performance = 0
 
-class IterativeDLSAgent():
+class IterativeDeepeningAStartAgent():
     def __init__(self):
         self.performance = 0
 
