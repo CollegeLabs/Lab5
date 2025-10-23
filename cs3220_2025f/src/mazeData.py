@@ -35,18 +35,22 @@ def MazeCheck(mainMaze, initState, goalState):
     mainMaze[goalState] = 1
 
 def GhostCheck(mainMaze,Pinky,Inky,Blinky,Clyde,Betrayus):
-  if (Pinky != 3):
+  if (mainMaze[Pinky] != 3):
     mainMaze[Pinky] = 3
-  if (Inky != 3):
+  if (mainMaze[Inky] != 3):
     mainMaze[Inky] = 3
-  if (Blinky != 3):
+  if (mainMaze[Blinky] != 3):
     mainMaze[Blinky] = 3
-  if (Clyde != 3):
+  if (mainMaze[Clyde] != 3):
     mainMaze[Clyde] = 3
-  if (Betrayus != 3):
+  if (mainMaze[Betrayus] != 3):
     mainMaze[Betrayus] = 3
 
-
+def findPelletGoals(goals, mainMaze):
+  for x in range(mainMaze.shape[0]):
+    for y in range(mainMaze.shape[1]):
+      if (mainMaze[x][y] == 2):
+        goals.append((x, y))
 
 def draw_maze(maze):
     fig, ax = plt.subplots()
