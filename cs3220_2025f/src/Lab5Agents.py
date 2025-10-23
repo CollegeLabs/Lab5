@@ -14,5 +14,5 @@ class IterativeDeepeningAStartAgent():
 class Ghost():
     def __init__(self, Graph):
         size = len(Graph.nodes())
-        power = round(random.uniform(0.10,0.40), 2)
+        power = 0.3
         self.power = power*size

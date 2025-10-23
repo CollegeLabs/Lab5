@@ -40,10 +40,12 @@ class Lab5NavEnvironment(Environment):
             x, y = agent.state
             if (self.maze[x][y] == 1): #if the agent is NOT under attack
               agent.performance -= 1
+            elif (self.maze[x][y] == 3):
+              agent.performacne * 2
             else: #the spaceship is under attack (0's are walls, so they're ignored before this)
               print(f"Agent in {agent.state} is under attack!")
               enemy = Ghost(self.status) 
-              if (agent.performance*2 < enemy.power):
+              if (agent.performance <= enemy.power):
                 agent.performance = 0 #dies instantly
               else:
                 agent.performance = agent.performance*0.9 #removes 10% of performance

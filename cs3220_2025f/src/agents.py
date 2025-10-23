@@ -30,7 +30,7 @@
 
 import math
 
-from src.PS_agentPrograms import A_StarSearchAgentProgram
+from src.PS_agentPrograms import *
 from src.mazeProblemSolvingAgentSMARTClass import MazeProblemSolvingAgentSMART
 #from vacuumProblemSolvingAgentShowClass import VacuumProblemSolvingAgentDraw
 #from src.navProblemSolvingAgentClass import navProblemSolvingAgent
@@ -39,6 +39,11 @@ def ProblemSolvingMazeAgentAstar(initState,mazeWorldGraph,goalState):
     #Astar_AP_EvcDist=A_StarSearchAgentProgram(math.dist)
     #return MazeProblemSolvingAgentSMART(initState,mazeWorldGraph,goalState,Astar_AP_EvcDist)
     return MazeProblemSolvingAgentSMART(initState,mazeWorldGraph,goalState,A_StarSearchAgentProgram(math.dist))
+
+def IDA_StarSearchAgent(initState,mazeWorldGraph,goalState):
+    #Astar_AP_EvcDist=A_StarSearchAgentProgram(math.dist)
+    #return MazeProblemSolvingAgentSMART(initState,mazeWorldGraph,goalState,Astar_AP_EvcDist)
+    return MazeProblemSolvingAgentSMART(initState,mazeWorldGraph,goalState,IDA_StarSearchAgentProgram(math.dist))
 
 
 # def ProblemSolvingMazeAgentBFS(initState,mazeWorldGraph,goalState):

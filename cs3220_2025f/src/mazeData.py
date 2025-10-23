@@ -35,16 +35,18 @@ def MazeCheck(mainMaze, initState, goalState):
     mainMaze[goalState] = 1
 
 def GhostCheck(mainMaze,Pinky,Inky,Blinky,Clyde,Betrayus):
-  if (Pinky != 1):
-    mainMaze[Pinky] = 1
-  if (Inky != 1):
-    mainMaze[Inky] = 1
-  if (Blinky != 1):
-    mainMaze[Blinky] = 1
-  if (Clyde != 1):
-    mainMaze[Clyde] = 1
-  if (Betrayus != 1):
-    mainMaze[Betrayus] = 1
+  if (Pinky != 3):
+    mainMaze[Pinky] = 3
+  if (Inky != 3):
+    mainMaze[Inky] = 3
+  if (Blinky != 3):
+    mainMaze[Blinky] = 3
+  if (Clyde != 3):
+    mainMaze[Clyde] = 3
+  if (Betrayus != 3):
+    mainMaze[Betrayus] = 3
+
+
 
 def draw_maze(maze):
     fig, ax = plt.subplots()

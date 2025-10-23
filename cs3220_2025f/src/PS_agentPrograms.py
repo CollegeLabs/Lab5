@@ -17,7 +17,7 @@ def A_StarSearchAgentProgram(f=None):
     #f=math.dist
     
     def program(problem):
-      #print("Hi")
+      print("Hi")
 
       node = Node(problem.initial)
  
@@ -25,7 +25,7 @@ def A_StarSearchAgentProgram(f=None):
       h=node.path_cost+round(math.dist(node.state, problem.goal),3)
       frontier.put((h,node))
       reached = {problem.initial:node}
-      #node_length=0
+
       while frontier:
         print(frontier.queue)
         node = frontier.get()[1]
@@ -43,9 +43,9 @@ def A_StarSearchAgentProgram(f=None):
                 h=child.path_cost+round(f(child.state, problem.goal),3)
                 frontier.put((h,child))
                 reached.update({child.state:child})
-                #node_length=len(node.expand(problem))
-      #print(f"The length of expanded nodes is {node_length}") #this print statement fails for some reason
+            
       return None
+
     return program
 
 
@@ -87,37 +87,6 @@ def BestFirstSearchAgentProgram(f=None):
 
     return program
   
-    '''
-def IDAStartAgentProgram(f=None):
-  def program(problem):
-    root = Node(initState[problem]) #what does this even mean???
-    f_limit = f_cost(root)
-    while(1): #is this what I do here??????
-      solution, f_limit = DFS_Contour(root, f_limit)
-      if (solution != None): return solution
-      elif (f_limit == infinity): return None #using None as a null replacement
-
-  def DFS_Contour(node, f_limit):
-    if (f_cost[node] > f_limit): return None, f_cost[node] #this feels like an illegal return statement
-    if (goal_test[problem](state[node])): return node, f_limit #yes, there is no == or anything in the given diagram
-    for node, s in successors[node]:
-       solution, new_f = DFS_Contour(s, f_limit)
-       if (solution != None): return solution, f_limit
-       next_f = min(new_f, next_f)
-       return None, next_f
-    '''
- 
-      
-
-
-
-
-
-
-
-
-
-
 
 def BestFirstSearchAgentProgramForShow(f=None):
   #with BFS we choose a node, n, with minimum value of some evaluation function, f (n).
@@ -177,3 +146,134 @@ def BestFirstSearchAgentProgramForShow(f=None):
       return None
 
     return program
+"""
+def IDA_StarSearchAgentProgram(f=None):
+    if f is None:
+        f = lambda s, g: math.dist(s, g)
+
+    
+    def program(problem):
+        root = Node(problem.initial)
+        f_limit = root.path_cost + f(root.state, problem.goal)
+
+        while True:
+            solution, new_limit = DFS_Contour(root, f_limit, problem)
+            if solution is not None:
+                return solution
+            if new_limit == float('inf'):
+                return None
+            f_limit = new_limit
+    
+
+    def DFS_Contour(node, f_limit, problem):
+        f_cost = node.path_cost + f(node.state, problem.goal)
+        if f_cost > f_limit:
+            return None, f_cost
+        if problem.goal_test(node.state):
+            return node, f_limit
+
+        next_f = float('inf')
+        for child in node.expand(problem):
+            solution, new_limit = DFS_Contour(child, f_limit, problem)
+            if solution is not None:
+                return solution, f_limit
+            next_f = min(next_f, new_limit)
+
+        return None, next_f
+    
+    return program
+"""
+
+def IDA_StarSearchAgentProgram(f=None):
+    if f is None:
+        f = lambda s, g: math.dist(s, g)
+
+    # --- Iterative (stack-based) DFS_Contour: no recursion anywhere ---
+    def DFS_Contour(root, f_limit, problem):
+        # Each frame: (node, children_iterator, state_of_node, f_cost)
+        # children_iterator yields child Node objects from node.expand(problem)
+        frame_children = lambda node: iter(node.expand(problem))
+
+        stack = []
+        path_set = set()            # states currently on the path (like call stack)
+        best_next_limit = float('inf')
+
+        # push root
+        stack.append((root, frame_children(root), root.state, root.path_cost + f(root.state, problem.goal)))
+        path_set.add(root.state)
+
+        while stack:
+            node, children_it, state, f_cost = stack[-1]
+
+            # If the f_cost was not computed (or children changed), ensure it's current:
+            # (we compute once when frame is pushed, so this is fine)
+
+            # If node exceeds current contour limit, update best_next_limit and backtrack
+            if f_cost > f_limit:
+                best_next_limit = min(best_next_limit, f_cost)
+                # pop and remove from path
+                stack.pop()
+                path_set.discard(state)
+                continue
+
+            # Goal test
+            if problem.goal_test(state):
+                return node, f_limit
+
+            # Try to get next child from iterator
+            try:
+                child = next(children_it)
+            except StopIteration:
+                # finished exploring this node, backtrack
+                stack.pop()
+                path_set.discard(state)
+                continue
+
+            # skip children that are already on current path (avoid cycles)
+            if child.state in path_set:
+                # skip to next child (do not push)
+                continue
+
+            # prepare child's f_cost and push frame
+            child_f_cost = child.path_cost + f(child.state, problem.goal)
+            # push child frame (LIFO) — note we make children iterator lazily via expand
+            stack.append((child, frame_children(child), child.state, child_f_cost))
+            path_set.add(child.state)
+            # loop continues, we will process the child next iteration
+
+        return None, best_next_limit
+
+    # --- Main program (outer closure) ---
+    def program(problem):
+        root = Node(problem.initial)
+        f_limit = root.path_cost + f(root.state, problem.goal)
+
+        while True:
+            solution, new_limit = DFS_Contour(root, f_limit, problem)
+            if solution is not None:
+                return solution
+            if new_limit == float('inf'):
+                return None
+            f_limit = new_limit
+
+    return program
+
+'''
+def IDAStartAgentProgram(f=None):
+  def program(problem):
+    root = Node(initState[problem]) #what does this even mean???
+    f_limit = f_cost(root)
+    while(1): #is this what I do here??????
+      solution, f_limit = DFS_Contour(root, f_limit)
+      if (solution != None): return solution
+      elif (f_limit == infinity): return None #using None as a null replacement
+
+  def DFS_Contour(node, f_limit):
+    if (f_cost[node] > f_limit): return None, f_cost[node] #this feels like an illegal return statement
+    if (goal_test[problem](state[node])): return node, f_limit #yes, there is no == or anything in the given diagram
+    for node, s in successors[node]:
+       solution, new_f = DFS_Contour(s, f_limit)
+       if (solution != None): return solution, f_limit
+       next_f = min(new_f, next_f)
+       return None, next_f
+'''
