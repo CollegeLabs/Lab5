@@ -9,7 +9,7 @@ class navProblemSolvingAgent(SimpleProblemSolvingAgentProgram):
     self.dataGraph=dataGraph
     self.goal=goal
     
-    self.performance=len(dataGraph.nodes())
+    self.performance=len(dataGraph.nodes())*0.3
     print(self.performance)
     
 

@@ -4,7 +4,7 @@ import collections
 class MazeProblemSolvingAgentSMART(MazeProblemSolvingAgent):
   def __init__(self, initial_state=None, dataGraph=None, goal=None, program=None):
     super().__init__(initial_state,dataGraph,goal)
-    self.performance=len(dataGraph.nodes())
+    self.performance=len(dataGraph.nodes())*0.3
     self.path=None
 
     if program is None or not isinstance(program, collections.abc.Callable):
