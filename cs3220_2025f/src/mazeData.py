@@ -52,6 +52,20 @@ def findPelletGoals(goals, mainMaze):
       if (mainMaze[x][y] == 2):
         goals.append((x, y))
 
+def findManhattenDistance(x, y):
+  return abs(x[0] - y[0]) + abs(x[1] - y[1]) #finding manhatten distance to order the goals
+
+def findGoalOrder(initState, goals): #chooses closest pellet everytime
+  unvisited = goals.copy()
+  order = []
+  current = initState
+  while unvisited:
+    next_goal = min(unvisited, key=lambda g: findManhattenDistance(current, g))
+    order.append(next_goal)
+    unvisited.remove(next_goal)
+    current=next_goal
+  return order
+
 def draw_maze(maze):
     fig, ax = plt.subplots()
     colors = sns.color_palette('coolwarm', len(np.unique(maze)))

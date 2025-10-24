@@ -88,17 +88,3 @@ class Lab5NavEnvironment(Environment):
           self.execute_action(agent, action)
     else:
         print("There is no one here who could work...")
-
-'''
-mazeSize=7
-mainMaze = makeMaze(mazeSize)
-mazeAvalActs=defineMazeAvailableActions(mainMaze)
-maze1TM=makeMazeTransformationModel(mazeAvalActs)
-mazeWorldGraph=mazeGraph(maze1TM, mazeStatesLocations(list(maze1TM.keys())))
-
-initState = (0,0)
-goalState = (6,6)
-
-mp1=MazeProblem(initState, goalState, mazeWorldGraph)
-'''
-    
