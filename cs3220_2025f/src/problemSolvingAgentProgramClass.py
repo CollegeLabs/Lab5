@@ -30,8 +30,9 @@ class SimpleProblemSolvingAgentProgram:
                         goal = current_goal
                         problem = self.formulate_problem(self.state, goal)
                         self.seq.extend (self.search(problem))
-                        percept=current_goal
+                        self.state=current_goal
                         self.goal.remove(goal)
+                        percept=self.state
                   self.state = temp
             else:
                   print(f"Hi, I have the only goal: {goal}")

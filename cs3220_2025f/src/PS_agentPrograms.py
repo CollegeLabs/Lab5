@@ -17,8 +17,8 @@ def A_StarSearchAgentProgram(f=None):
     #f=math.dist
     
     def program(problem):
-      print("Hi")
-
+      #print("Hi")
+      print ("Problem = {}\n".format(problem.initial))
       node = Node(problem.initial)
  
       frontier = PriorityQueue()
@@ -33,6 +33,7 @@ def A_StarSearchAgentProgram(f=None):
 
         if problem.goal_test(node.state):
           print("We have found our goal: {}".format (node.state))
+          problem.initial = node.state #making the new initState == old goalState
           return node
 
         #reached.add(node.state)
