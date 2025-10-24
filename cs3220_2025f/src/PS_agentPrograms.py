@@ -18,9 +18,9 @@ def A_StarSearchAgentProgram(f=None):
     
     def program(problem):
       #print("Hi")
-      print ("Problem = {}\n".format(problem.initial))
+      node_expanded = 0
+      path_cost = 0
       node = Node(problem.initial)
- 
       frontier = PriorityQueue()
       h=node.path_cost+round(math.dist(node.state, problem.goal),3)
       frontier.put((h,node))
@@ -30,10 +30,10 @@ def A_StarSearchAgentProgram(f=None):
         print(frontier.queue)
         node = frontier.get()[1]
         print("The node {} is extracted from frontier:".format(node.state))
-
+        node_expanded += 1
         if problem.goal_test(node.state):
           print("We have found our goal: {}".format (node.state))
-          problem.initial = node.state #making the new initState == old goalState
+          print("Path cost = {} and nodes extracted = {}".format(path_cost, node_expanded))
           return node
 
         #reached.add(node.state)
@@ -44,9 +44,8 @@ def A_StarSearchAgentProgram(f=None):
                 h=child.path_cost+round(f(child.state, problem.goal),3)
                 frontier.put((h,child))
                 reached.update({child.state:child})
-            
+                path_cost += 1
       return None
-
     return program
 
 
@@ -55,7 +54,6 @@ def BestFirstSearchAgentProgram(f=None):
   #with BFS we choose a node, n, with minimum value of some evaluation function, f (n).
     
     def program(problem):
-
       node = Node(problem.initial)
       #node.color=nodeColors["start"]
       #print(node.state)
