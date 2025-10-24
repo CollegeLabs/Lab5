@@ -55,7 +55,7 @@ def findPelletGoals(goals, mainMaze):
 def findManhattenDistance(x, y):
   return abs(x[0] - y[0]) + abs(x[1] - y[1]) #finding manhatten distance to order the goals
 
-def findGoalOrder(initState, goals): #chooses closest pellet everytime
+def findGoalOrder(initState, goals, goalState): #chooses closest pellet everytime
   unvisited = goals.copy()
   order = []
   current = initState
@@ -64,6 +64,7 @@ def findGoalOrder(initState, goals): #chooses closest pellet everytime
     order.append(next_goal)
     unvisited.remove(next_goal)
     current=next_goal
+  order.append(goalState)
   return order
 
 def draw_maze(maze):
