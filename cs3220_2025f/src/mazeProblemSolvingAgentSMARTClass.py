@@ -20,6 +20,7 @@ class MazeProblemSolvingAgentSMART(MazeProblemSolvingAgent):
     solution=self.actions_path(seq.path()) if seq else None
     #print("Number of nodes expanded for this path = ".format(len(seq.path())))
     #not sure if the above is what hanna wants, but it gives the number of nodes traveled from start to end
+    print("Path cost of solution is: {}".format(len(solution)))
     print("Solution (a sequence of actions) from the initial state to a goal: {}".format(solution))
     self.path=seq.path()
     #problem.initial = self.state #initial solution to change current state when changing goals

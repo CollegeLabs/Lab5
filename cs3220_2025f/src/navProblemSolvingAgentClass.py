@@ -50,6 +50,7 @@ class navProblemSolvingAgent(SimpleProblemSolvingAgentProgram):
   def search(self, problem):
     seq = self.program(problem)
     solution=self.actions_path(seq.path())
+    print("Path cost of solution is: {}".format(len(solution)))
     print("Solution (a sequence of actions) from the initial state to a goal: {}".format(solution))
     return solution
   
